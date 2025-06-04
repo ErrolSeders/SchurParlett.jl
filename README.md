@@ -1,2 +1,3 @@
-# SchurParlett.jl
-Computation of arbitrary matrix functions using the Schur-Parlett algorithm.
+# SchurParlett
+
+[![Build Status](https://github.com/ErrolSeders/SchurParlett.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/ErrolSeders/SchurParlett.jl/actions/workflows/CI.yml?query=branch%3Amain)
