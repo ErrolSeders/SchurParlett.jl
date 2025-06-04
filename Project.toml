@@ -3,7 +3,19 @@ uuid = "19a19067-98a7-4934-96a9-4ffe4c335fa4"
 authors = ["Errol Seders"]
 version = "1.0.0-DEV"
 
+[deps]
+DelaunayTriangulation = "927a84f5-c5f4-47a5-9785-b46e178433df"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MatrixDepot = "b51810bb-c9f3-55da-ae3c-350fc1fbce05"
+TaylorSeries = "6aa5eb33-94cf-58f4-a9d0-e4b2c4fc25ea"
+UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
+
 [compat]
+DelaunayTriangulation = "1.6.4"
+LinearAlgebra = "1.11.0"
+MatrixDepot = "1.0.13"
+TaylorSeries = "0.20.1"
+UnicodePlots = "3.7.2"
 julia = "1.6.7"
 
 [extras]
