@@ -29,7 +29,7 @@ function block_parlett_recurrance(f, T, blocks)
         else
             σ = tr(Tii) / n
             M = Tii - σ * I(n)
-            taylor = taylor_expand(f, σ, order=10)
+            taylor = taylor_expand(f, σ, order=n)
             F[block, block] = taylor(M)
         end
         n = length(blocks)
@@ -48,6 +48,7 @@ function block_parlett_recurrance(f, T, blocks)
                 # This can also fail for some matrices with a very cryptic
                 # LAPACKException(1)
                 F[bi, bj] .= sylvester(A, -B, -C)
+                # AX + XB + C = 0 → AX - XB = C
             end
         end
     end

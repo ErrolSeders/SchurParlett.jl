@@ -6,8 +6,6 @@ using TaylorSeries, LinearAlgebra, DelaunayTriangulation
 include("blocking.jl")
 include("parlett.jl")
 
-
-
 #!TODO!:
 # 1:    Add condition number calculation
 # 2:    Try and trim Delaunay blockings allocations size down.
@@ -17,17 +15,16 @@ include("parlett.jl")
 #       Taylor Series and Sylvester solving.
 
 """
-  `schur_parlett(f, A [, ε=0.1])`
-
+  `schur_parlett(f, A [, δ=0.1])`
   For given *complex valued* function `f: C -> C` and complex matrix `A`
   compute the matrix function `f(A)` using the Schur-Parlett algorithm
 
-  `ε > 0` is a blocking parameter. This method is highly sensitive to the
+  `δ > 0` is a blocking parameter. This method is highly sensitive to the
   clustering and distribution of eigenvalues, *tuning this value is important*.
 
 """
 function schur_parlett(f, A::Matrix{<:Complex}, δ=0.1)::AbstractMatrix
-    @assert δ > 0 "Blocking parameter `ε` cannot be negative!"
+    @assert δ > 0 "Blocking parameter `δ` cannot be negative!"
     Q = schur(A) #! Consider writing a mutating version that uses schur!(A) for potential 2x speedup.
     T, Z, Λ = Q
     if isdiag(T)
@@ -44,16 +41,16 @@ function schur_parlett(f, A::Matrix{<:Complex}, δ=0.1)::AbstractMatrix
         q = block_pattern(δ, Λ)
     end
 
-    perm = collect(1:length(q))
-    for c ∈ reverse(1:length(q))
-        select = (q .== c)
+    perm = sortperm(q)
 
-        selected = findall(select)
-        remaining = findall(.!select)
-        reorder = [selected; remaining]
-        ordschur!(Q, select)
-        perm = perm[reorder]
+    clusters = sort(unique(q))
+    selected = Vector{Bool}()
+    for c ∈ clusters
+        append!(selected, q .== c)
     end
+
+    ordschur!(Q, selected)
+
     T, Z, Λ = Q
     q_reorder = q[perm]
     blocks = block_indices(q_reorder)
@@ -61,6 +58,6 @@ function schur_parlett(f, A::Matrix{<:Complex}, δ=0.1)::AbstractMatrix
     Z * F * Z'
 end
 
-export schur_parlett
+export schur_parlett, block_indices, block_parlett_recurrance, block_pattern
 
 end
