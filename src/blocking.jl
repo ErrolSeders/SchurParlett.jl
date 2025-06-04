@@ -1,3 +1,5 @@
+using SchurParlett
+
 struct UnionFind
     parent::Vector{Int}
     size::Vector{Int}
@@ -70,7 +72,7 @@ function delaunay_graph_blocking(δ::AbstractFloat, Λ::Vector)
 end
 
 """
-  `block_pattern(ε::AbstractFloat, T::UpperTriangular, Λ::Vector{Complex})`
+  `block_pattern(ε::AbstractFloat, Λ::Vector{Complex})`
 
   Reorder and block the upper triangular schur factor `T` so that
   each diagonal block contains closely clustered eigenvalues from `T`.
