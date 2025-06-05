@@ -5,6 +5,8 @@ using TaylorSeries, LinearAlgebra, DelaunayTriangulation
 
 include("blocking.jl")
 include("parlett.jl")
+include("condition.jl")
+include("generation.jl")
 
 
 
@@ -61,6 +63,6 @@ function schur_parlett(f, A::Matrix{<:Complex}, δ=0.1)::AbstractMatrix
     Z * F * Z'
 end
 
-export schur_parlett
+export schur_parlett, random_normal_matrix, abs_cond_func
 
 end
